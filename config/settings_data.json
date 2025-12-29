@@ -1,12 +1,12 @@
 {
   "current": {
-    "color_primary": "#121212",
-    "color_secondary": "#6366f1", 
-    "color_accent": "#f59e0b",
+    "color_primary": "#f97316",
+    "color_secondary": "#1a3a4a", 
+    "color_accent": "#f97316",
     "color_background": "#ffffff",
-    "color_text": "#374151",
-    "font_body": "system",
-    "font_heading": "system",
+    "color_text": "#333333",
+    "font_body": "assistant_n4",
+    "font_heading": "assistant_n6",
     "page_width": 1200,
     "section_spacing": 60
   }
