@@ -4,8 +4,8 @@
     "theme_name": "YGGDRILL Pro",
     "theme_version": "2.0.0",
     "theme_author": "YGGDRILL",
-    "theme_documentation_url": "",
-    "theme_support_url": ""
+    "theme_documentation_url": "https://yggdrill.com/",
+    "theme_support_url": "https://yggdrill.com/pages/contact"
   },
   {
     "name": "Colors",
@@ -14,19 +14,19 @@
         "type": "color",
         "id": "color_primary",
         "label": "Primary color",
-        "default": "#121212"
+        "default": "#f97316"
       },
       {
         "type": "color",
         "id": "color_secondary",
         "label": "Secondary color",
-        "default": "#6366f1"
+        "default": "#1a3a4a"
       },
       {
         "type": "color",
         "id": "color_accent",
         "label": "Accent color",
-        "default": "#f59e0b"
+        "default": "#f97316"
       },
       {
         "type": "color",
@@ -38,7 +38,7 @@
         "type": "color",
         "id": "color_text",
         "label": "Text color",
-        "default": "#374151"
+        "default": "#333333"
       }
     ]
   },
@@ -49,13 +49,13 @@
         "type": "font_picker",
         "id": "font_body",
         "label": "Body font",
-        "default": "system"
+        "default": "assistant_n4"
       },
       {
         "type": "font_picker",
         "id": "font_heading",
         "label": "Heading font",
-        "default": "system"
+        "default": "assistant_n6"
       }
     ]
   },
