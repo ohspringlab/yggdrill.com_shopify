@@ -34,20 +34,21 @@
       }
 
       .header {
-        display: grid;
-        grid-template-columns: 1fr auto 1fr;
+        display: flex;
+        justify-content: space-between;
         align-items: center;
         padding: 1.2rem 0;
-        gap: 2rem;
       }
 
       .header__left {
+        flex: 1;
         display: flex;
         align-items: center;
+        justify-content: flex-start;
       }
 
       .header__search {
-        width: 240px;
+        width: 220px;
         position: relative;
       }
 
@@ -62,7 +63,8 @@
         pointer-events: none;
       }
 
-      .header__logo {
+      .header__center {
+        flex: 0 0 auto;
         text-align: center;
       }
 
@@ -72,10 +74,11 @@
       }
 
       .header__right {
+        flex: 1;
         display: flex;
         align-items: center;
         justify-content: flex-end;
-        gap: 1.2rem;
+        gap: 1rem;
       }
 
       .header__icon {
@@ -118,20 +121,8 @@
       }
 
       @media screen and (max-width: 989px) {
-        .header {
-          grid-template-columns: auto 1fr auto;
-        }
         .header__search {
           display: none;
-        }
-        .header__left {
-          order: 1;
-        }
-        .header__logo {
-          order: 2;
-        }
-        .header__right {
-          order: 3;
         }
       }
 
@@ -257,7 +248,7 @@
             </div>
           </div>
 
-          <div class="header__logo">
+          <div class="header__center">
             <a href="{{ routes.root_url }}">
               <img src="https://yggdrill.com/wp-content/uploads/2025/10/logo.png" alt="{{ shop.name }}" class="header__logo-image">
             </a>
