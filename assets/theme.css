@@ -1519,20 +1519,35 @@ main { background: var(--color-background-beige); }
    LANDING PAGE STYLES
    ======================================== */
 
-/* Announcement Bar */
+/* Announcement Bar - Scrolling Marquee */
 .announcement-bar {
   background: linear-gradient(90deg, #f97316 0%, #ea580c 100%);
   color: white;
   padding: 0.8rem 0;
   font-size: 1.3rem;
   overflow: hidden;
+  position: relative;
+}
+
+.announcement-bar__track {
+  overflow: hidden;
+  width: 100%;
 }
 
 .announcement-bar__inner {
   display: flex;
-  justify-content: center;
   gap: 4rem;
-  flex-wrap: wrap;
+  animation: marquee 20s linear infinite;
+  width: max-content;
+}
+
+@keyframes marquee {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
 }
 
 .announcement-bar__item {
@@ -1544,11 +1559,7 @@ main { background: var(--color-background-beige); }
 
 @media (max-width: 768px) {
   .announcement-bar__inner {
-    gap: 1.5rem;
-    justify-content: center;
-  }
-  .announcement-bar__item:nth-child(3) {
-    display: none;
+    animation-duration: 15s;
   }
 }
 
