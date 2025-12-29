@@ -1565,12 +1565,14 @@ main { background: var(--color-background-beige); }
 
 /* Hero Section */
 .hero {
-  padding: 0;
+  padding: 1rem;
+  background: #f5f5f5;
 }
 
 .hero__grid {
   display: grid;
   grid-template-columns: 1.5fr 1fr;
+  gap: 1rem;
   min-height: 500px;
 }
 
@@ -1587,10 +1589,18 @@ main { background: var(--color-background-beige); }
   align-items: flex-end;
   min-height: 400px;
   background: #1a1a1a;
+  border-radius: 12px;
 }
 
 .hero__card--large {
   min-height: 500px;
+}
+
+@media (max-width: 768px) {
+  .hero__card,
+  .hero__card--large {
+    min-height: 350px;
+  }
 }
 
 .hero__image {
