@@ -1,0 +1,14 @@
+{% comment %}
+  Breadcrumb Snippet
+  Usage: {% render 'breadcrumb', current: 'Page Title' %}
+{% endcomment %}
+
+<div class="breadcrumb-bar">
+  <div class="page-width">
+    <nav class="breadcrumb">
+      <a href="{{ routes.root_url }}">Home</a>
+      <span class="breadcrumb__separator">/</span>
+      <span class="breadcrumb__current">{{ current }}</span>
+    </nav>
+  </div>
+</div>

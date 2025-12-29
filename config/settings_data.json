@@ -1,0 +1,13 @@
+{
+  "current": {
+    "color_primary": "#121212",
+    "color_secondary": "#6366f1", 
+    "color_accent": "#f59e0b",
+    "color_background": "#ffffff",
+    "color_text": "#374151",
+    "font_body": "system",
+    "font_heading": "system",
+    "page_width": 1200,
+    "section_spacing": 60
+  }
+}

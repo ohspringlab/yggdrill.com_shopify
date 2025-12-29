@@ -1,0 +1,97 @@
+/* Star Rain Background Effect */
+.star-rain-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 0;
+  overflow: hidden;
+}
+
+.star {
+  position: absolute;
+  width: 3px;
+  height: 3px;
+  background: white;
+  border-radius: 50%;
+  opacity: 0;
+  animation: starFall linear infinite;
+  box-shadow: 
+    0 0 6px 1px rgba(99, 179, 237, 0.8),
+    0 0 12px 2px rgba(99, 179, 237, 0.5),
+    0 0 18px 3px rgba(99, 179, 237, 0.3);
+}
+
+.star::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 1px;
+  height: 1px;
+  background: white;
+  border-radius: 50%;
+  box-shadow: 0 0 3px 1px white;
+}
+
+/* Star sizes */
+.star--small {
+  width: 2px;
+  height: 2px;
+  box-shadow: 
+    0 0 4px 1px rgba(99, 179, 237, 0.6),
+    0 0 8px 2px rgba(99, 179, 237, 0.3);
+}
+
+.star--large {
+  width: 4px;
+  height: 4px;
+  box-shadow: 
+    0 0 8px 2px rgba(99, 179, 237, 0.9),
+    0 0 16px 4px rgba(99, 179, 237, 0.5),
+    0 0 24px 6px rgba(99, 179, 237, 0.2);
+}
+
+/* Animation */
+@keyframes starFall {
+  0% {
+    opacity: 0;
+    transform: translateY(-10px) translateX(0);
+  }
+  10% {
+    opacity: 1;
+  }
+  90% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+    transform: translateY(100vh) translateX(20px);
+  }
+}
+
+/* Twinkle variation */
+.star--twinkle {
+  animation: starFall linear infinite, twinkle 1.5s ease-in-out infinite;
+}
+
+@keyframes twinkle {
+  0%, 100% {
+    opacity: 0.3;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1.2);
+  }
+}
+
+/* Reduce motion for accessibility */
+@media (prefers-reduced-motion: reduce) {
+  .star-rain-container {
+    display: none;
+  }
+}

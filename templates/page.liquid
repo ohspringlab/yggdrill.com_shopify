@@ -1,0 +1,19 @@
+{% comment %}
+  Page Template
+  Shows static page content
+{% endcomment %}
+
+<!-- Breadcrumb -->
+{% render 'breadcrumb', current: page.title %}
+
+<!-- Page Content -->
+<section class="page-section">
+  <div class="page-width">
+    <div class="page-container">
+      <h1 class="page-container__title">{{ page.title }}</h1>
+      <div class="page-container__content">
+        {{ page.content }}
+      </div>
+    </div>
+  </div>
+</section>

@@ -1,0 +1,106 @@
+{% comment %}
+  Collection Template
+  Shows products in a grid with filters, sorting, and pagination
+{% endcomment %}
+
+<!-- Breadcrumb Bar -->
+{% render 'breadcrumb', current: collection.title %}
+
+<div class="collection-page">
+  <div class="page-width">
+    <!-- Toolbar -->
+    <div class="collection-toolbar">
+      <button class="collection-toolbar__filters" id="filtersToggle">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <line x1="4" y1="6" x2="20" y2="6"></line>
+          <line x1="4" y1="12" x2="20" y2="12"></line>
+          <line x1="4" y1="18" x2="20" y2="18"></line>
+        </svg>
+        Filters
+      </button>
+      <div class="collection-toolbar__view">
+        <div class="collection-toolbar__show">
+          <span>Show :</span>
+          <a href="?limit=9">9</a>
+          <span class="collection-toolbar__divider">/</span>
+          <a href="?limit=12" class="active">12</a>
+          <span class="collection-toolbar__divider">/</span>
+          <a href="?limit=18">18</a>
+          <span class="collection-toolbar__divider">/</span>
+          <a href="?limit=24">24</a>
+        </div>
+        <div class="collection-toolbar__grid-icons">
+          <button class="collection-toolbar__grid-icon" data-grid="2">
+            <svg viewBox="0 0 24 24" fill="currentColor">
+              <rect x="3" y="3" width="8" height="8"></rect>
+              <rect x="13" y="3" width="8" height="8"></rect>
+              <rect x="3" y="13" width="8" height="8"></rect>
+              <rect x="13" y="13" width="8" height="8"></rect>
+            </svg>
+          </button>
+          <button class="collection-toolbar__grid-icon" data-grid="3">
+            <svg viewBox="0 0 24 24" fill="currentColor">
+              <rect x="2" y="3" width="5" height="8"></rect>
+              <rect x="9" y="3" width="5" height="8"></rect>
+              <rect x="16" y="3" width="5" height="8"></rect>
+              <rect x="2" y="13" width="5" height="8"></rect>
+              <rect x="9" y="13" width="5" height="8"></rect>
+              <rect x="16" y="13" width="5" height="8"></rect>
+            </svg>
+          </button>
+          <button class="collection-toolbar__grid-icon active" data-grid="4">
+            <svg viewBox="0 0 24 24" fill="currentColor">
+              <rect x="1" y="3" width="4" height="8"></rect>
+              <rect x="7" y="3" width="4" height="8"></rect>
+              <rect x="13" y="3" width="4" height="8"></rect>
+              <rect x="19" y="3" width="4" height="8"></rect>
+              <rect x="1" y="13" width="4" height="8"></rect>
+              <rect x="7" y="13" width="4" height="8"></rect>
+              <rect x="13" y="13" width="4" height="8"></rect>
+              <rect x="19" y="13" width="4" height="8"></rect>
+            </svg>
+          </button>
+        </div>
+        <div class="collection-toolbar__sort">
+          <select>
+            <option selected>Default sorting</option>
+            <option>Sort by popularity</option>
+            <option>Sort by latest</option>
+            <option>Sort by price: low to high</option>
+            <option>Sort by price: high to low</option>
+          </select>
+        </div>
+      </div>
+    </div>
+
+    <!-- Product Grid -->
+    <div class="product-grid" id="productGrid">
+      {% for product in collection.products %}
+        {% render 'product-card', product: product, index: forloop.index %}
+      {% else %}
+        {% render 'collection-placeholder' %}
+      {% endfor %}
+    </div>
+
+    <!-- Category Description -->
+    {% if collection.description != blank %}
+      <div class="category-description">
+        {{ collection.description }}
+      </div>
+    {% else %}
+      {% render 'collection-description-default' %}
+    {% endif %}
+  </div>
+</div>
+
+<script>
+document.querySelectorAll('.collection-toolbar__grid-icon').forEach(btn => {
+  btn.addEventListener('click', function() {
+    const grid = this.dataset.grid;
+    const productGrid = document.getElementById('productGrid');
+    document.querySelectorAll('.collection-toolbar__grid-icon').forEach(b => b.classList.remove('active'));
+    this.classList.add('active');
+    productGrid.style.gridTemplateColumns = `repeat(${grid}, 1fr)`;
+  });
+});
+</script>

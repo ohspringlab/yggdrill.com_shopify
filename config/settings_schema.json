@@ -1,0 +1,87 @@
+[
+  {
+    "name": "theme_info",
+    "theme_name": "YGGDRILL Pro",
+    "theme_version": "2.0.0",
+    "theme_author": "YGGDRILL",
+    "theme_documentation_url": "",
+    "theme_support_url": ""
+  },
+  {
+    "name": "Colors",
+    "settings": [
+      {
+        "type": "color",
+        "id": "color_primary",
+        "label": "Primary color",
+        "default": "#121212"
+      },
+      {
+        "type": "color",
+        "id": "color_secondary",
+        "label": "Secondary color",
+        "default": "#6366f1"
+      },
+      {
+        "type": "color",
+        "id": "color_accent",
+        "label": "Accent color",
+        "default": "#f59e0b"
+      },
+      {
+        "type": "color",
+        "id": "color_background",
+        "label": "Background color",
+        "default": "#ffffff"
+      },
+      {
+        "type": "color",
+        "id": "color_text",
+        "label": "Text color",
+        "default": "#374151"
+      }
+    ]
+  },
+  {
+    "name": "Typography",
+    "settings": [
+      {
+        "type": "font_picker",
+        "id": "font_body",
+        "label": "Body font",
+        "default": "system"
+      },
+      {
+        "type": "font_picker",
+        "id": "font_heading",
+        "label": "Heading font",
+        "default": "system"
+      }
+    ]
+  },
+  {
+    "name": "Layout",
+    "settings": [
+      {
+        "type": "range",
+        "id": "page_width",
+        "label": "Page width",
+        "min": 1000,
+        "max": 1400,
+        "step": 50,
+        "default": 1200,
+        "unit": "px"
+      },
+      {
+        "type": "range",
+        "id": "section_spacing",
+        "label": "Section spacing",
+        "min": 40,
+        "max": 100,
+        "step": 10,
+        "default": 60,
+        "unit": "px"
+      }
+    ]
+  }
+]

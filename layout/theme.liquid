@@ -1,0 +1,433 @@
+<!doctype html>
+<html class="no-js" lang="{{ request.locale.iso_code }}">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <meta name="theme-color" content="#f97316">
+    <link rel="canonical" href="{{ canonical_url }}">
+    <link rel="preconnect" href="https://cdn.shopify.com" crossorigin>
+
+    <title>
+      {{ page_title }}
+      {%- if current_tags %} &ndash; tagged "{{ current_tags | join: ', ' }}"{% endif -%}
+      {%- if current_page != 1 %} &ndash; Page {{ current_page }}{% endif -%}
+      {%- unless page_title contains shop.name %} &ndash; {{ shop.name }}{% endunless -%}
+    </title>
+
+    {% if page_description %}
+      <meta name="description" content="{{ page_description | escape }}">
+    {% endif %}
+
+    {{ content_for_header }}
+    {{ 'theme.css' | asset_url | stylesheet_tag }}
+    {{ 'star-rain.css' | asset_url | stylesheet_tag }}
+
+    <style>
+      /* Header */
+      .header-wrapper {
+        background: white;
+        position: sticky;
+        top: 0;
+        z-index: 100;
+      }
+
+      .header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 1.2rem 0;
+        gap: 2rem;
+      }
+
+      .header__search {
+        flex: 0 0 240px;
+        position: relative;
+      }
+
+      .header__search svg {
+        position: absolute;
+        left: 1.2rem;
+        top: 50%;
+        transform: translateY(-50%);
+        width: 1.6rem;
+        height: 1.6rem;
+        color: #888;
+      }
+
+      .header__logo {
+        flex: 1;
+        text-align: center;
+      }
+
+      .header__logo-image {
+        height: 42px;
+        width: auto;
+      }
+
+      .header__icons {
+        display: flex;
+        align-items: center;
+        gap: 1.2rem;
+      }
+
+      .header__icon {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        color: #333;
+        text-decoration: none;
+        font-size: 1.3rem;
+        position: relative;
+      }
+
+      .header__icon svg {
+        width: 2rem;
+        height: 2rem;
+      }
+
+      .header__icon-text {
+        display: none;
+      }
+
+      @media screen and (min-width: 990px) {
+        .header__icon-text { display: inline; }
+      }
+
+      .header__icon .badge {
+        position: absolute;
+        top: -6px;
+        right: -6px;
+        background: var(--color-primary);
+        color: white;
+        font-size: 1rem;
+        font-weight: 600;
+        min-width: 1.6rem;
+        height: 1.6rem;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+
+      /* Main Navigation */
+      .main-nav {
+        background: white;
+        border-top: 1px solid #eee;
+      }
+
+      .main-nav__list {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 2.5rem;
+        list-style: none;
+        padding: 0;
+        margin: 0;
+      }
+
+      .main-nav__link {
+        display: block;
+        padding: 1rem 0;
+        font-size: 1.4rem;
+        font-weight: 500;
+        color: #333;
+        text-decoration: none;
+      }
+
+      .main-nav__link:hover,
+      .main-nav__link--active {
+        color: var(--color-primary);
+      }
+
+      @media screen and (max-width: 989px) {
+        .main-nav { display: none; }
+        .header__search { display: none; }
+      }
+
+      /* Mobile Menu Toggle */
+      .mobile-menu-toggle {
+        display: none;
+        flex-direction: column;
+        gap: 5px;
+        background: none;
+        border: none;
+        padding: 0.8rem;
+        cursor: pointer;
+      }
+
+      .mobile-menu-toggle span {
+        display: block;
+        width: 22px;
+        height: 2px;
+        background: #333;
+      }
+
+      @media screen and (max-width: 989px) {
+        .mobile-menu-toggle { display: flex; }
+      }
+
+      /* Menu Drawer */
+      .menu-drawer {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100vh;
+        background: white;
+        z-index: 200;
+        transform: translateX(-100%);
+        transition: transform 0.3s ease;
+        overflow-y: auto;
+      }
+
+      .menu-drawer.active { transform: translateX(0); }
+
+      .menu-drawer__header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 1.5rem;
+        border-bottom: 1px solid #eee;
+      }
+
+      .menu-drawer__close {
+        background: none;
+        border: none;
+        padding: 0.5rem;
+        cursor: pointer;
+      }
+
+      .menu-drawer__menu {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+      }
+
+      .menu-drawer__menu-item {
+        display: block;
+        padding: 1.5rem 2rem;
+        font-size: 1.6rem;
+        color: #333;
+        text-decoration: none;
+        border-bottom: 1px solid #f3f4f6;
+      }
+    </style>
+  </head>
+
+  <body>
+    <a class="visually-hidden" href="#MainContent">Skip to content</a>
+
+    <!-- Header -->
+    <header class="header-wrapper">
+      <div class="page-width">
+        <div class="header">
+          <div class="header__search">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <circle cx="11" cy="11" r="8"></circle>
+              <path d="m21 21-4.35-4.35"></path>
+            </svg>
+            <input type="search" class="search-input" placeholder="Search for products">
+          </div>
+
+          <div class="header__logo">
+            <a href="{{ routes.root_url }}">
+              <img src="https://yggdrill.com/wp-content/uploads/2025/10/logo.png" alt="{{ shop.name }}" class="header__logo-image">
+            </a>
+          </div>
+
+          <div class="header__icons">
+            <a href="/account" class="header__icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                <circle cx="12" cy="7" r="4"></circle>
+              </svg>
+              <span class="header__icon-text">Login / Register</span>
+            </a>
+            <a href="/wishlist" class="header__icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path>
+              </svg>
+              <span class="badge">0</span>
+            </a>
+            <a href="/compare" class="header__icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M16 3h5v5M4 20L21 3M21 16v5h-5M15 15l6 6M4 4l5 5"></path>
+              </svg>
+              <span class="badge">0</span>
+            </a>
+            <a href="{{ routes.cart_url }}" class="header__icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <circle cx="9" cy="21" r="1"></circle>
+                <circle cx="20" cy="21" r="1"></circle>
+                <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path>
+              </svg>
+              <span class="badge">{{ cart.item_count }}</span>
+            </a>
+            <button class="mobile-menu-toggle" id="mobileMenuToggle">
+              <span></span><span></span><span></span>
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <nav class="main-nav">
+        <div class="page-width">
+          <ul class="main-nav__list">
+            <li><a href="/collections/home-miners" class="main-nav__link main-nav__link--active">Home Miners</a></li>
+            <li><a href="/collections/home-nodes" class="main-nav__link">Home Nodes</a></li>
+            <li><a href="/collections/accessories-spares" class="main-nav__link">Accessories & Spares</a></li>
+            <li><a href="/collections/combo-deals" class="main-nav__link">Combo Deals</a></li>
+            <li><a href="/collections/bitcoin-merch" class="main-nav__link">Bitcoin Merch</a></li>
+            <li><a href="/pages/flasher" class="main-nav__link">Flasher</a></li>
+          </ul>
+        </div>
+      </nav>
+    </header>
+
+    <!-- Mobile Menu -->
+    <div class="menu-drawer" id="menuDrawer">
+      <div class="menu-drawer__header">
+        <a href="{{ routes.root_url }}">
+          <img src="https://yggdrill.com/wp-content/uploads/2025/10/logo.png" alt="{{ shop.name }}" height="35">
+        </a>
+        <button class="menu-drawer__close" id="menuDrawerClose">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <line x1="18" y1="6" x2="6" y2="18"></line>
+            <line x1="6" y1="6" x2="18" y2="18"></line>
+          </svg>
+        </button>
+      </div>
+      <ul class="menu-drawer__menu">
+        <li><a href="/collections/home-miners" class="menu-drawer__menu-item">Home Miners</a></li>
+        <li><a href="/collections/home-nodes" class="menu-drawer__menu-item">Home Nodes</a></li>
+        <li><a href="/collections/accessories-spares" class="menu-drawer__menu-item">Accessories & Spares</a></li>
+        <li><a href="/collections/combo-deals" class="menu-drawer__menu-item">Combo Deals</a></li>
+        <li><a href="/collections/bitcoin-merch" class="menu-drawer__menu-item">Bitcoin Merch</a></li>
+        <li><a href="/pages/flasher" class="menu-drawer__menu-item">Flasher</a></li>
+      </ul>
+    </div>
+
+    <!-- Main Content -->
+    <main id="MainContent" role="main">
+      {{ content_for_layout }}
+    </main>
+
+    <!-- Newsletter Bar -->
+    <section class="newsletter-bar">
+      <div class="page-width">
+        <div class="newsletter-bar__inner">
+          <div class="newsletter-bar__left">
+            <h3>Create a Yggdrill account</h3>
+            <div class="newsletter-bar__actions">
+              <a href="/account/register" class="newsletter-bar__signup-btn">Sign Up</a>
+              <span class="newsletter-bar__text">Already have an account? <a href="/account/login">Login</a></span>
+            </div>
+          </div>
+          <div class="newsletter-bar__right">
+            <h4>Join our newsletter to unlock exclusive benefits</h4>
+            <form class="newsletter-bar__form" action="/contact#contact_form" method="post">
+              <input type="hidden" name="form_type" value="customer">
+              <input type="email" name="contact[email]" class="newsletter-bar__input" placeholder="Your email address" required>
+              <button type="submit" class="newsletter-bar__button">Sign Up</button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+      <div class="page-width">
+        <div class="footer__grid">
+          <div class="footer__brand">
+            <div class="footer__logo">
+              <img src="https://yggdrill.com/wp-content/uploads/2025/10/yggdrill-logo-white.png" alt="{{ shop.name }}" class="footer__logo-image" onerror="this.src='https://yggdrill.com/wp-content/uploads/2025/10/logo.png'">
+            </div>
+            <p>Own your hashpower. No noise, no complexity. Plug-and-mine devices for every home.</p>
+            <div class="footer__social">
+              <a href="#" class="footer__social-link footer__social-link--dark" aria-label="X">
+                <svg viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+              </a>
+              <a href="#" class="footer__social-link footer__social-link--green" aria-label="WhatsApp">
+                <svg viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+              </a>
+              <a href="#" class="footer__social-link footer__social-link--blue" aria-label="Discord">
+                <svg viewBox="0 0 24 24" fill="currentColor"><path d="M20.317 4.37a19.791 19.791 0 0 0-4.885-1.515.074.074 0 0 0-.079.037c-.21.375-.444.864-.608 1.25a18.27 18.27 0 0 0-5.487 0 12.64 12.64 0 0 0-.617-1.25.077.077 0 0 0-.079-.037A19.736 19.736 0 0 0 3.677 4.37a.07.07 0 0 0-.032.027C.533 9.046-.32 13.58.099 18.057a.082.082 0 0 0 .031.057 19.9 19.9 0 0 0 5.993 3.03.078.078 0 0 0 .084-.028 14.09 14.09 0 0 0 1.226-1.994.076.076 0 0 0-.041-.106 13.107 13.107 0 0 1-1.872-.892.077.077 0 0 1-.008-.128 10.2 10.2 0 0 0 .372-.292.074.074 0 0 1 .077-.01c3.928 1.793 8.18 1.793 12.062 0a.074.074 0 0 1 .078.01c.12.098.246.198.373.292a.077.077 0 0 1-.006.127 12.299 12.299 0 0 1-1.873.892.077.077 0 0 0-.041.107c.36.698.772 1.362 1.225 1.993a.076.076 0 0 0 .084.028 19.839 19.839 0 0 0 6.002-3.03.077.077 0 0 0 .032-.054c.5-5.177-.838-9.674-3.549-13.66a.061.061 0 0 0-.031-.03zM8.02 15.33c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.956-2.419 2.157-2.419 1.21 0 2.176 1.096 2.157 2.42 0 1.333-.956 2.418-2.157 2.418zm7.975 0c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.955-2.419 2.157-2.419 1.21 0 2.176 1.096 2.157 2.42 0 1.333-.946 2.418-2.157 2.418z"/></svg>
+              </a>
+            </div>
+          </div>
+
+          <div>
+            <h4 class="footer__title">Online Store</h4>
+            <ul class="footer__links">
+              <li><a href="/collections/home-miners">Home Miners</a></li>
+              <li><a href="/collections/home-nodes">Home Nodes</a></li>
+              <li><a href="/collections/accessories-spares">Accessories & Spares</a></li>
+              <li><a href="/collections/combo-deals">Combo Deals</a></li>
+            </ul>
+          </div>
+
+          <div>
+            <h4 class="footer__title">Customer Care</h4>
+            <ul class="footer__links">
+              <li><a href="/pages/contact">Contact Us</a></li>
+              <li><a href="/pages/shipping-delivery">Shipping & Delivery</a></li>
+              <li><a href="/pages/returns-refunds">Returns & Refunds</a></li>
+              <li><a href="/pages/bitaxe-web-flasher">Bitaxe Web Flasher</a></li>
+            </ul>
+          </div>
+
+          <div>
+            <h4 class="footer__title">Legal & Policies</h4>
+            <ul class="footer__links">
+              <li><a href="/pages/privacy-policy">Privacy Policy</a></li>
+              <li><a href="/pages/terms-conditions">Terms & Conditions</a></li>
+              <li><a href="/pages/cookie-policy">Cookie Policy</a></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      
+      <div class="footer__bottom">
+        <div class="page-width">
+          <div class="footer__bottom-inner">
+            <p class="footer__copyright">&copy; {{ 'now' | date: '%Y' }} Yggdrill.com. All rights reserved.</p>
+            <div class="footer__payments">
+              <img src="https://cdn.shopify.com/shopifycloud/checkout-web/assets/c1.en/assets/visa.sxIq5Dot.svg" alt="Visa" class="footer__payment-img">
+              <img src="https://cdn.shopify.com/shopifycloud/checkout-web/assets/c1.en/assets/mastercard.1c4_lyMp.svg" alt="Mastercard" class="footer__payment-img">
+              <img src="https://cdn.shopify.com/shopifycloud/checkout-web/assets/c1.en/assets/amex.Csr7hRoy.svg" alt="American Express" class="footer__payment-img">
+              <img src="https://cdn.shopify.com/shopifycloud/checkout-web/assets/c1.en/assets/google-pay.C_LxB8va.svg" alt="Google Pay" class="footer__payment-img">
+            </div>
+          </div>
+        </div>
+      </div>
+    </footer>
+
+    <!-- Chat Button -->
+    <button class="chat-button" aria-label="Search">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <circle cx="11" cy="11" r="8"></circle>
+        <path d="m21 21-4.35-4.35"></path>
+      </svg>
+    </button>
+
+    <script>
+      const menuToggle = document.getElementById('mobileMenuToggle');
+      const menuDrawer = document.getElementById('menuDrawer');
+      const menuClose = document.getElementById('menuDrawerClose');
+
+      if (menuToggle && menuDrawer) {
+        menuToggle.addEventListener('click', () => {
+          menuDrawer.classList.toggle('active');
+          document.body.style.overflow = menuDrawer.classList.contains('active') ? 'hidden' : '';
+        });
+        menuClose.addEventListener('click', () => {
+          menuDrawer.classList.remove('active');
+          document.body.style.overflow = '';
+        });
+      }
+    </script>
+    <script src="{{ 'star-rain.js' | asset_url }}" defer></script>
+  </body>
+</html>
