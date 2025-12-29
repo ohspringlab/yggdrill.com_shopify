@@ -1,7 +1,229 @@
 {% comment %}
-  Homepage Template
-  Currently shows 404 page until homepage is built
-  Future: Add hero section, featured products, etc.
+  Homepage Template - Landing Page
 {% endcomment %}
 
-{% render 'page-404' %}
+<!-- Announcement Bar -->
+<div class="announcement-bar">
+  <div class="announcement-bar__inner">
+    <div class="announcement-bar__item">
+      <span class="announcement-bar__icon">🟢</span>
+      Free international shipping on orders over $500.
+    </div>
+    <div class="announcement-bar__item">
+      <span class="announcement-bar__icon">📦</span>
+      Fast EU delivery with tracked shipping.
+    </div>
+    <div class="announcement-bar__item">
+      <span class="announcement-bar__icon">💬</span>
+      Real human support. Available on WhatsApp.
+    </div>
+  </div>
+</div>
+
+<!-- Hero Section -->
+<section class="hero">
+  <div class="hero__grid">
+    <div class="hero__card hero__card--large">
+      <img src="https://yggdrill.com/wp-content/uploads/2025/01/yggdrill-hero-miners.jpg" alt="Mine Bitcoin at Home" class="hero__image" onerror="this.style.display='none'">
+      <div class="hero__overlay"></div>
+      <div class="hero__content">
+        <h1 class="hero__title">Mine Bitcoin at Home</h1>
+        <p class="hero__text">Own your hashpower. No noise, no complexity.<br>Plug-and-mine devices for every home.</p>
+        <a href="/collections/home-miners" class="hero__btn">Shop Home Miners</a>
+      </div>
+    </div>
+    <div class="hero__card">
+      <img src="https://yggdrill.com/wp-content/uploads/2025/01/yggdrill-hero-nodes.jpg" alt="Run a Home Node" class="hero__image" onerror="this.style.display='none'">
+      <div class="hero__overlay"></div>
+      <div class="hero__content">
+        <h2 class="hero__title hero__title--sm">Run a Home Node</h2>
+        <p class="hero__text">True self-sovereignty begins with running a node.<br>Run your own Bitcoin node at home.</p>
+        <a href="/collections/home-nodes" class="hero__btn">Shop Home Nodes</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Featured Products -->
+<section class="featured-products">
+  <div class="page-width">
+    <div class="section-header">
+      <span class="section-header__subtitle">Almost as good as fika ☕🇸🇪</span>
+      <h2 class="section-header__title">Home Miners from Sweden</h2>
+      <a href="/collections/home-miners" class="section-header__btn">View All</a>
+    </div>
+    <div class="featured-products__grid">
+      {% for product in collections.all.products limit: 6 %}
+        {% render 'product-card', product: product, index: forloop.index %}
+      {% else %}
+        {% render 'collection-placeholder' %}
+      {% endfor %}
+    </div>
+  </div>
+</section>
+
+<!-- Tagline Bar -->
+<div class="tagline-bar">
+  <div class="tagline-bar__inner">
+    <div class="tagline-bar__item">
+      <span>❤️</span> Open source. Open future.
+    </div>
+    <div class="tagline-bar__item">
+      <span>🚀</span> Freedom requires participation, not spectators.
+    </div>
+    <div class="tagline-bar__item">
+      <span>🟠</span> One block can change everything.
+    </div>
+    <div class="tagline-bar__item">
+      <span>⚡</span> Strengthen the Bitcoin network from your home.
+    </div>
+  </div>
+</div>
+
+<!-- Discover Products -->
+<section class="discover-section">
+  <div class="page-width">
+    <div class="section-header section-header--left">
+      <span class="section-header__subtitle">The most popular categories</span>
+      <h2 class="section-header__title">Discover Products</h2>
+    </div>
+    <div class="discover-grid">
+      <a href="/collections/home-nodes" class="discover-card">
+        <img src="https://yggdrill.com/wp-content/uploads/2025/01/home-nodes-category.jpg" alt="Home Nodes" onerror="this.src='https://placehold.co/400x300/1a3a4a/ffffff?text=HOME+NODES'">
+        <div class="discover-card__overlay"></div>
+        <span class="discover-card__label">HOME NODES</span>
+        <span class="discover-card__plus">+</span>
+      </a>
+      <a href="/collections/home-miners" class="discover-card">
+        <img src="https://yggdrill.com/wp-content/uploads/2025/01/home-miners-category.jpg" alt="Home Miners" onerror="this.src='https://placehold.co/400x300/f97316/ffffff?text=HOME+MINERS'">
+        <div class="discover-card__overlay"></div>
+        <span class="discover-card__label">HOME MINERS</span>
+        <span class="discover-card__plus">+</span>
+      </a>
+      <a href="/collections/combo-deals" class="discover-card">
+        <img src="https://yggdrill.com/wp-content/uploads/2025/01/combo-deals-category.jpg" alt="Combo Deals" onerror="this.src='https://placehold.co/400x300/2d2d2d/ffffff?text=COMBO+DEALS'">
+        <div class="discover-card__overlay"></div>
+        <span class="discover-card__label">COMBO DEALS</span>
+        <span class="discover-card__plus">+</span>
+      </a>
+      <a href="/collections/accessories-spares" class="discover-card">
+        <img src="https://yggdrill.com/wp-content/uploads/2025/01/accessories-category.jpg" alt="Accessories & Spares" onerror="this.src='https://placehold.co/400x300/666666/ffffff?text=ACCESSORIES'">
+        <div class="discover-card__overlay"></div>
+        <span class="discover-card__label">ACCESSORIES & SPARES</span>
+        <span class="discover-card__plus">+</span>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- Blog Section -->
+<section class="blog-section">
+  <div class="page-width">
+    <div class="blog-section__layout">
+      <div class="blog-section__intro">
+        <span class="blog-section__subtitle">Your source for home mining knowledge</span>
+        <h2 class="blog-section__title">Explore our latest mining blog posts</h2>
+        <a href="/blogs/news" class="blog-section__btn">Read The Blog</a>
+      </div>
+      <div class="blog-section__posts">
+        <article class="blog-card">
+          <div class="blog-card__date">
+            <span class="blog-card__day">12</span>
+            <span class="blog-card__month">DEC</span>
+          </div>
+          <div class="blog-card__image">
+            <img src="https://yggdrill.com/wp-content/uploads/2025/01/blog-flasher.jpg" alt="Web Flasher" onerror="this.src='https://placehold.co/300x200/f97316/ffffff?text=Bitaxe'">
+          </div>
+          <div class="blog-card__content">
+            <h3 class="blog-card__title">How to Use the Bitaxe Web Flasher</h3>
+            <p class="blog-card__excerpt">What is the Yggdrill Bitaxe Firmware Updater? A browser-based tool that allows you to update the firmware on your Bitaxe mining device...</p>
+            <a href="/blogs/news" class="blog-card__link">Continue Reading</a>
+          </div>
+        </article>
+        <article class="blog-card">
+          <div class="blog-card__date">
+            <span class="blog-card__day">11</span>
+            <span class="blog-card__month">DEC</span>
+          </div>
+          <div class="blog-card__image">
+            <img src="https://yggdrill.com/wp-content/uploads/2025/01/blog-setup.jpg" alt="Setup Guide" onerror="this.src='https://placehold.co/300x200/dc2626/ffffff?text=Setup'">
+          </div>
+          <div class="blog-card__content">
+            <h3 class="blog-card__title">Bitaxe Gamma Setup & Firmware Guide</h3>
+            <p class="blog-card__excerpt">This Bitaxe Gamma setup guide will help you install, configure, and update your miner safely and correctly. Bitaxe Gamma Quick Install...</p>
+            <a href="/blogs/news" class="blog-card__link">Continue Reading</a>
+          </div>
+        </article>
+        <article class="blog-card">
+          <div class="blog-card__date">
+            <span class="blog-card__day">10</span>
+            <span class="blog-card__month">DEC</span>
+          </div>
+          <div class="blog-card__image">
+            <img src="https://yggdrill.com/wp-content/uploads/2025/01/blog-mining.jpg" alt="Home Mining" onerror="this.src='https://placehold.co/300x200/1a3a4a/ffffff?text=Mining'">
+          </div>
+          <div class="blog-card__content">
+            <h3 class="blog-card__title">The New Era of Bitcoin Home Mining</h3>
+            <p class="blog-card__excerpt">Bitcoin Home Mining Explained For Beginners | Start Mining At Home With Premium Miners Introduction Bitcoin mining has traditionally...</p>
+            <a href="/blogs/news" class="blog-card__link">Continue Reading</a>
+          </div>
+        </article>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Reviews Section -->
+<section class="reviews-section">
+  <div class="page-width">
+    <div class="reviews-section__header">
+      <span class="reviews-section__subtitle">Honest reviews from the home mining community</span>
+      <h2 class="reviews-section__title">
+        <span>✨</span> See what our customers think of Yggdrill products<span>🧡</span>
+      </h2>
+      <div class="reviews-section__rating">
+        <span class="reviews-section__label">Customer Reviews</span>
+        <span class="reviews-section__stars">★★★★★</span>
+        <span class="reviews-section__count">5 (23 Reviews)</span>
+      </div>
+    </div>
+    <div class="reviews-grid">
+      <div class="review-card">
+        <div class="review-card__header">
+          <div class="review-card__avatar" style="background:#4CAF50">H</div>
+          <div class="review-card__info">
+            <span class="review-card__name">Hugo</span>
+            <span class="review-card__badge">✓ Verified</span>
+          </div>
+          <div class="review-card__stars">★★★★★</div>
+        </div>
+        <p class="review-card__text">Amazing product! Setup was super easy and it's been running perfectly for weeks now.</p>
+        <span class="review-card__date">Dec 08, 2025</span>
+      </div>
+      <div class="review-card">
+        <div class="review-card__header">
+          <div class="review-card__avatar" style="background:#2196F3">AD</div>
+          <div class="review-card__info">
+            <span class="review-card__name">Adriana</span>
+            <span class="review-card__badge">✓ Verified</span>
+          </div>
+          <div class="review-card__stars">★★★★★</div>
+        </div>
+        <p class="review-card__text">Great customer service and fast shipping. The miner is quiet and efficient.</p>
+        <span class="review-card__date">Dec 03, 2025</span>
+      </div>
+      <div class="review-card">
+        <div class="review-card__header">
+          <div class="review-card__avatar" style="background:#9C27B0">LO</div>
+          <div class="review-card__info">
+            <span class="review-card__name">Lotta</span>
+            <span class="review-card__badge">✓ Verified</span>
+          </div>
+          <div class="review-card__stars">★★★★★</div>
+        </div>
+        <p class="review-card__text">Finally a reliable source for home mining equipment in Europe!</p>
+        <span class="review-card__date">Dec 02, 2025</span>
+      </div>
+    </div>
+  </div>
+</section>
