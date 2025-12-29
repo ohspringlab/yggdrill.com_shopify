@@ -1,6 +1,7 @@
 {% comment %}
   Collection Placeholder Products
   Shows demo products when collection is empty
+  Note: These are placeholder cards - add real products in Shopify Admin for clickable links
 {% endcomment %}
 
 {% assign demo_products = "Bitaxe Gamma 601,Bitaxe Gamma 602,Bitaxe Gamma 602 Black Ice + Bitcoin Full Node Combo,Bitaxe Gamma 602 Ice Angel + Bitcoin Full Node Combo" | split: "," %}
@@ -36,7 +37,7 @@
         </svg>
       </button>
     </div>
-    <a href="#">
+    <a href="/collections/all">
       <div class="product-card__placeholder">
         <svg width="60" height="60" viewBox="0 0 24 24" fill="none" stroke="#ccc" stroke-width="1">
           <rect x="3" y="3" width="18" height="18" rx="2"></rect>
@@ -46,11 +47,11 @@
       </div>
     </a>
     <div class="product-card__wave">
-      <a href="#" class="product-card__add-to-cart">Add To Cart</a>
+      <a href="/collections/all" class="product-card__add-to-cart">Add To Cart</a>
     </div>
   </div>
   <div class="product-card__content">
-    <h3 class="product-card__title"><a href="#">{{ title }}</a></h3>
+    <h3 class="product-card__title"><a href="/collections/all">{{ title }}</a></h3>
     <div class="product-card__category">{{ demo_categories[forloop.index0] | replace: "; ", ", " }}</div>
     <div class="product-card__rating">
       <span class="product-card__stars">★★★★★</span>
