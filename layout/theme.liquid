@@ -274,7 +274,7 @@
       <nav class="main-nav">
         <div class="page-width">
           <ul class="main-nav__list">
-            <li><a href="/collections/home-miners" class="main-nav__link main-nav__link--active">Home Miners</a></li>
+            <li><a href="{{ routes.root_url }}collections/home-miners" class="main-nav__link {% if request.path contains 'home-miners' %}main-nav__link--active{% endif %}">Home Miners</a></li>
             <li><a href="/collections/home-nodes" class="main-nav__link">Home Nodes</a></li>
             <li><a href="/collections/accessories-spares" class="main-nav__link">Accessories & Spares</a></li>
             <li><a href="/collections/combo-deals" class="main-nav__link">Combo Deals</a></li>
